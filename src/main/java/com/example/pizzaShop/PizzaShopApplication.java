@@ -1,5 +1,6 @@
 package com.example.pizzaShop;
 
+import com.example.pizzaShop.model.AppUser;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -8,6 +9,7 @@ public class PizzaShopApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(PizzaShopApplication.class, args);
+		AppUser appUser = new AppUser();
 	}
 
 }
