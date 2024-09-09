@@ -1,6 +1,7 @@
 package com.example.pizzaShop.controller;
 
 import com.example.pizzaShop.dto.AppUserDto;
+import com.example.pizzaShop.dto.ProfileDTO;
 import com.example.pizzaShop.model.AppUser;
 import com.example.pizzaShop.service.AppUserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -29,8 +30,8 @@ public class AppUserController {
         return appUserService.login(appUserDto, request);
     }
 
-    @GetMapping("/test")
-    public String test(){
-        return "пися попа";
+    @GetMapping("/user/profile")
+    public ProfileDTO profile(@RequestHeader String token){
+        return appUserService.profile(token);
     }
 }

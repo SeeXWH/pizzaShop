@@ -1,15 +1,17 @@
 package com.example.pizzaShop.dto;
 
+import com.example.pizzaShop.model.OrderItem;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductsDto {
-    private long id;
-    private long count;
+    private List<OrderItem> itemList;
 }

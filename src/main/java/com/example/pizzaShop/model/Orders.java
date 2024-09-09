@@ -1,13 +1,12 @@
 package com.example.pizzaShop.model;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.example.pizzaShop.dto.ProductsDto;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import jakarta.persistence.Entity;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
 import java.util.List;
@@ -20,10 +19,21 @@ import java.util.List;
 @Entity
 public class Orders {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-    private long userId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private Long userId;
     private String status;
-    private Date data;
-    private List<Integer> products;
+    @CreationTimestamp
+    private Date createdAt;
+
+    @ElementCollection
+    @CollectionTable(name = "order_items", joinColumns = @JoinColumn(name = "order_id"))
+    private List<OrderItem> data;
+
+    public Orders(Long userId, String status, Date createdAt, List<OrderItem> data) {
+        this.userId = userId;
+        this.status = status;
+        this.createdAt = createdAt;
+        this.data = data;
+    }
 }
