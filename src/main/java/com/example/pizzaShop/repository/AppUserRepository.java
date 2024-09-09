@@ -8,5 +8,4 @@ import org.springframework.data.repository.query.Param;
 public interface AppUserRepository  extends JpaRepository<AppUser, Long> {
     AppUser findByName(String userName);
 
-    AppUser findByEmail(String email);
 }
