@@ -7,5 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface AppUserRepository  extends JpaRepository<AppUser, Long> {
     AppUser findByName(String userName);
-
+    AppUser findByEmail(String email);
+    @Query("SELECT u.id FROM AppUser u WHERE u.name = ?1")
+    Long findIdByName(String name);
 }
