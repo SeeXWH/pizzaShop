@@ -58,7 +58,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, @Autowired JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/user/register", "/user/login", "/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html/**").permitAll()
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/pizza-api-demo/auth/**", "/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html/**").permitAll()
                         .requestMatchers("/**").authenticated()).
                 formLogin(AbstractHttpConfigurer::disable).addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

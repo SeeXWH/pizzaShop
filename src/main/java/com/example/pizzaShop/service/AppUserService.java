@@ -22,16 +22,19 @@ public class AppUserService {
     private final PasswordEncoder passwordEncoder;
 
     public String register(AppUser appUser, HttpServletRequest request) {
-        if (appUserRepository.findByUsername(appUser.getName()) != null) {
-            String errorMessage = "a user with that name already exists";
+        if (appUserRepository.findByName(appUser.getEmail()) != null) {
+            String errorMessage = "a user with that Email already exists";
             throw new PizzaShopExeption(errorMessage);
         }
-        appUser.setPassword(passwordEncoder.encode(appUser.getPassword()));
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(appUser.getEmail(), appUser.getPassword()));
-        String token = jwtTokenProvider.generateToken(authentication);
-        request.getSession().setAttribute("token", token);
-        return "access_token: " + token;
+        String newPassword = passwordEncoder.encode(appUser.getPassword());
+        appUser.setPassword(newPassword);
+        appUserRepository.save(appUser);
+//        Authentication authentication = authenticationManager.authenticate(
+//                new UsernamePasswordAuthenticationToken(appUser.getEmail(), newPassword));
+//        String token = jwtTokenProvider.generateToken(authentication);
+//        request.getSession().setAttribute("token", token);
+//        return "access_token: " + token;
+        return "1";
     }
 
     public String login(AppUserDto appUserDto, HttpServletRequest request) {
