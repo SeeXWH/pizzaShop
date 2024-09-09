@@ -17,7 +17,8 @@ public class AppUserController {
 
     @PostMapping("/auth/register")
     public String addUser(@RequestBody AppUser appUser, HttpServletRequest request){
-        return appUserService.register(appUser, request);
+        System.out.println(appUserService.register(appUser).toString());
+        return appUserService.login(appUserService.register(appUser), request);
     }
 
     @PostMapping("/auth/login")

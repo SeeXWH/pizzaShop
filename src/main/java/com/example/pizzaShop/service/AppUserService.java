@@ -21,27 +21,25 @@ public class AppUserService {
     private final AppUserRepository appUserRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public String register(AppUser appUser, HttpServletRequest request) {
+    public AppUserDto register(AppUser appUser) {
         if (appUserRepository.findByName(appUser.getEmail()) != null) {
             String errorMessage = "a user with that Email already exists";
             throw new PizzaShopExeption(errorMessage);
         }
-        String newPassword = passwordEncoder.encode(appUser.getPassword());
-        appUser.setPassword(newPassword);
-        appUserRepository.save(appUser);
-//        Authentication authentication = authenticationManager.authenticate(
-//                new UsernamePasswordAuthenticationToken(appUser.getEmail(), newPassword));
-//        String token = jwtTokenProvider.generateToken(authentication);
-//        request.getSession().setAttribute("token", token);
-//        return "access_token: " + token;
-        return "1";
+            String newPassword = passwordEncoder.encode(appUser.getPassword());
+            appUser.setPassword(newPassword);
+            appUserRepository.save(appUser);
+            return new AppUserDto(appUser.getEmail(), newPassword);
     }
 
     public String login(AppUserDto appUserDto, HttpServletRequest request) {
         try {
+            System.out.println(1);
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(appUserDto.getEmail(), appUserDto.getPassword()));
+            System.out.println(2);
             String token = jwtTokenProvider.generateToken(authentication);
+            System.out.println(3);
             request.getSession().setAttribute("token", token);
             return "access_token: " + token;
         } catch (PizzaShopExeption e) {
